@@ -1,20 +1,18 @@
-import { Injectable } from "@nestjs/common";
-import { userInterface } from "./interface/user-interface";
+import { UserCreateDto } from "./dto/user.create.dto";
 
-@Injectable()
 export class UserService {
-  private readonly users: userInterface[] = [];
+  private readonly user: UserCreateDto[] = [];
 
-  findAllUsers() {
-    return this.users;
+  findOne({ email }) {
+    return this.user.find((ele) => ele.email === email);
   }
 
-  create(userInfo: userInterface) {
-    this.users.push(userInfo);
-    return userInfo
-  }
+  // createUser(userInfo: UserCreateDto) {
+  //   this.user.push(userInfo);
+  //   return userInfo;
+  // }
 
-  findById(id : number) {
-    return this.users.find(ele => ele.id === id)
+  findAll() {
+    return this.user;
   }
 }
