@@ -8,7 +8,7 @@ export class User {
   @Prop()
   name: string;
 
-  @Prop()
+  @Prop({ unique: true })
   lastname: string;
 
   @Prop()
@@ -16,6 +16,9 @@ export class User {
 
   @Prop()
   password: string;
+
+  @Prop({default: 'user'})
+  role: string;
 }
 
-export const UserSchema = SchemaFactory.createForClass(User)
+export const UserSchema = SchemaFactory.createForClass(User);

@@ -1,18 +1,17 @@
-import { UserCreateDto } from "./dto/user.create.dto";
+import { User } from "src/schema/user.schema";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
 
 export class UserService {
-  private readonly user: UserCreateDto[] = [];
+  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
-  findOne({ email }) {
-    return this.user.find((ele) => ele.email === email);
+  async findOne({ email }): Promise<User | null> {
+    const user = await this.userModel.findOne({ email });
+    return user;
   }
 
-  // createUser(userInfo: UserCreateDto) {
-  //   this.user.push(userInfo);
-  //   return userInfo;
-  // }
-
-  findAll() {
-    return this.user;
+  async findAll(): Promise<User[] | null> {
+    const allUser = await this.userModel.find({});
+    return allUser;
   }
 }
