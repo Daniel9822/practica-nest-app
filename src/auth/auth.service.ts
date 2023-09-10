@@ -17,18 +17,19 @@ export class AuthService {
   ) {}
 
   async login({ email, password }: AuthDto) {
-    const user = this.userService.findOne({ email });
+    const user = await this.userService.findOne({ email });
     if (!user?.email) throw new UnauthorizedException();
 
     const compare = bcrypt.compare(password, user.password);
     if (!compare) throw new UnauthorizedException();
 
-    const payload = { email };
+    const payload = { email, role: user.role };
     const token = await this.jwtService.signAsync(payload);
 
     return {
       email,
       token,
+      role: user.role
     };
   }
 
