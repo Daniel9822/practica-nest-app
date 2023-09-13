@@ -3,14 +3,11 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { AuthModule } from "./auth/auth.module";
 import { MongooseModule } from "@nestjs/mongoose";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 @Module({
-  imports: [
-    AuthModule,
-    MongooseModule.forRoot(
-      "mongodb+srv://fitness:Y4ScMVxrbG1TTvy7@cluster0.whhmn2w.mongodb.net/?retryWrites=true&w=majority",
-    ),
-  ],
+  imports: [AuthModule, MongooseModule.forRoot(process.env.MONGO_URI)],
   controllers: [AppController],
   providers: [AppService],
 })
